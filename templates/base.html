@@ -12,24 +12,79 @@
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
   </head>
   <body>
+      <nav class="navbar bg-primary navbar-dark navbar-expand-sm">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Visual Analytics Project</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Help</a>
+            </li>
+          </ul>
+        </nav>
         <div class="container-fluid">
+          <h2 class="text-center" style="margin:2%">Visual Analytics Project</h2>
             <div class="row">
-                <div class="col-sm-10 mx-auto">
-                    {% block content %}{% endblock %}
+                <div class="col-md-10 mx-auto">
+                  <div class="clear"></div>
+                  <div class="text-center">
+                    <h3>Let's get started by uploading a dataset</h3>
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#upload-modal">
+                          Upload DataSet
+                        </button>
+                  </div>
+                    
+                    <div class="first-visualization"></div>
                 </div>
             </div>
         </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+       <!-- Button trigger modal -->
+        
+          
+          <!-- Modal -->
+          <div class="modal fade" id="upload-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Upload DataSet</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input type="file">
+                  <div>OR</div>
+                  <div>Use an existing dataset</div>
+                  <form id="upload-dataset">
+                      <input type="radio" name="life" value="life"> Life Expectancy<br>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary save-changes-upload">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://d3js.org/queue.v1.min.js"></script>
     <script>
-        var piechartDataUrl = "{{ url_for('get_piechart_data') }}";
-        var barchartDataUrl = "{{ url_for('get_barchart_data') }}";
+          var scatterPlotDataUrl = "{{ url_for('get_scatter_plot_data') }}";
+
+        // var piechartDataUrl = "{{ url_for('get_piechart_data') }}";
+        // var barchartDataUrl = "{{ url_for('get_barchart_data') }}";
     </script>
-    <script src="{{ url_for('static', filename='js/pieChart.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/barChart.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scatterPlot.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='js/pieChart.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/barChart.js') }}"></script> -->
     <script src="{{ url_for('static', filename='js/updateChart.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
   </body>
 </html>

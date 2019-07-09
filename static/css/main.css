@@ -3,7 +3,7 @@
 	position:relative;
 	top:40%;
 	left:10px;
-	width:400px;
+	/* width:400px; */
     height: 400px; 
     display: inline-block;
 }
@@ -22,4 +22,8 @@
    fill: white;
    font-weight: bold;	
    cursor: pointer;
-  		} 
+          } 
+
+.first-visualization_{
+    margin-top: 5%;
+}
