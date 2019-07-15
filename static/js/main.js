@@ -3,18 +3,23 @@
 //     // .defer(d3.json, barchartDataUrl)
 //     .defer(d3.json, scatterPlotDataUrl)
 //     .await(ready);
-
+console.log(barchartDataUrl);
 queue()
     .defer(d3.json, scatterPlotDataUrl)
+    .defer(d3.json, barchartDataUrl)
+    .defer(d3.json, decisionTreeDataUrl)
     .await(ready);
 
-function ready(error, dataset, datasetBarChart) {
+function ready(error, dataset, datasetBarChart, decisionTreeData) {
+
     console.log("inside ready");
     console.log(dataset);
-    console.log(datasetBarChart);
-    d3ScatterPlot(dataset,datasetBarChart);
+    console.log(decisionTreeData);
+
+    //d3ScatterPlot(dataset, datasetBarChart);
     // d3PieChart(dataset, datasetBarChart);
-    // d3BarChart(datasetBarChart);
+    d3BarChart(datasetBarChart);
+    d3DecisionTree(decisionTreeData)
 }
 
 // $(document).ready(function(){   

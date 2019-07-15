@@ -1,13 +1,31 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, json
 import csv
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeRegressor
 
 app = Flask(__name__)
 
 # titanic_df = pd.read_csv("static/data/train.csv")
 df = pd.read_csv("static/data/Final_Dataset.csv")
+
+df = df.fillna(0)
+null_columns=df.columns[df.isnull().any()]
+df[null_columns].isnull().sum()
+y= df['expectancy '].values
+X = df.drop(['expectancy ','Status','Country'], axis=1).values
+
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.3)
 # survived = titanic_df[(titanic_df['Survived']==1) & (titanic_df["Age"].notnull())]
+names = df.drop(['Country','Status'],axis=1).columns.values
+label_names = []
+feature_names = []
+for i in names:
+    if i == "expectancy ":
+        label_names.append(i)
+    else:
+        feature_names.append(i)
 
 path_for_dataframe =""
 @app.route('/load_data/<path>')
@@ -16,6 +34,40 @@ def plotData(path):
     # titanic_df = pd.read_csv(path_for_dataframe)
     # survived = titanic_df[(titanic_df['Survived']==1) & (titanic_df["Age"].notnull())]
     return path_for_dataframe
+
+def rules(clf, features, labels, node_index=0):
+    """Structure of rules in a fit decision tree classifier
+
+    Parameters
+    ----------
+    clf : DecisionTreeClassifier
+        A tree that has already been fit.
+
+    features, labels : lists of str
+        The names of the features and labels, respectively.
+
+    """
+    node = {}
+    if clf.tree_.children_left[node_index] == -1:  # indicates leaf
+        count_labels = zip(clf.tree_.value[node_index, 0], labels)
+        node['name'] = ', '.join(('{} of {}'.format(int(count), label)
+                                  for count, label in count_labels))
+    else:
+        feature = features[clf.tree_.feature[node_index]]
+        threshold = clf.tree_.threshold[node_index]
+        node['name'] = '{} > {}'.format(feature, threshold)
+        left_index = clf.tree_.children_left[node_index]
+        right_index = clf.tree_.children_right[node_index]
+        node['children'] = [rules(clf, features, labels, right_index),
+                            rules(clf, features, labels, left_index)]
+    return node
+@app.route('/get_dt_data')
+def get_dt_data():
+    
+    clf_dt = DecisionTreeRegressor()
+    clf_dt.fit(X_train, y_train)
+    r = rules(clf_dt, feature_names, label_names)
+    return jsonify(r)
 
 @app.route('/get_piechart_barchart')
 def get_piechart_barchart():
@@ -27,6 +79,7 @@ def index():
 
 @app.route('/get_scatter_plot_data')
 def get_scatter_plot_data():
+    '''
     scatterPlotData = []
     # print(df)
     for index,row in df.iterrows():
@@ -36,8 +89,8 @@ def get_scatter_plot_data():
         eachData['life'] = row["expectancy "]
         eachData['status'] = row['Status']
         scatterPlotData.append(eachData)
-    
-    return jsonify(scatterPlotData)
+    '''
+    return jsonify("")
 
 # def calculate_percentage(val, total):
 #     """Calculates the percentage of a value over a total"""
@@ -61,7 +114,18 @@ def get_piechart_data():
 
 @app.route('/get_barchart_data')
 def get_barchart_data():
-    return jsonify("")
+    output = ['Developed', 'Developing']
+    count_total = df.groupby('Status', as_index=False)['expectancy '].mean()
+    cnt = df.groupby('Status', as_index=False)['cumulative_co2_emissions_tonnes'].mean()
+    df_out = pd.merge(count_total,cnt,on='Status')
+    barChartData = []
+    for index, item in df_out.iterrows():
+        eachBarChart = {}
+        eachBarChart['Status'] = output[index]
+        eachBarChart['measure'] = item['expectancy ']
+        eachBarChart['category'] = item['cumulative_co2_emissions_tonnes']
+        barChartData.append(eachBarChart)
+    return jsonify(barChartData)
 
 #     age_labels = ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79']
 #     survived["age_group"] = pd.cut(survived.Age, range(0, 81, 10), right=False, labels=age_labels)
@@ -110,4 +174,6 @@ def get_barchart_data():
 
 
 if __name__ == '__main__':
-      app.run(debug=True)
+    app.jinja_env.auto_reload = True
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.run(debug=True)
