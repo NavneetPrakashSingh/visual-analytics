@@ -346,7 +346,8 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
         .attr("x", function(d) { return x1(d.Country);  })
         .attr("width", x1.bandwidth())//x.bandwidth()
         .attr("y", function(d) { return y1(d["expectancy "]); })
-        .attr("height", function(d) { return height - y1(d["expectancy "]); });
+        .attr("height", function(d) { return height - y1(d["expectancy "]); })
+        .attr("fill","steelblue");
   
   container2.selectAll(".bar")
         .data(data1)
@@ -356,7 +357,8 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
         .attr("x", function(d) { return x1(d.Country);  })
         .attr("width", x1.bandwidth())//x.bandwidth()
         .attr("y", function(d) { return y2(d["infant deaths"]); })
-        .attr("height", function(d) { return height - y2(d["infant deaths"]); });
+        .attr("height", function(d) { return height - y2(d["infant deaths"]); })
+        .attr("fill","brown");
         
   container3.selectAll(".bar")
         .data(data1)
@@ -365,7 +367,8 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
         .attr("x", function(d) { return x1(d.Country);  })
         .attr("width", x1.bandwidth())//x.bandwidth()
         .attr("y", function(d) { return y3(d["Adult Mortality"]); })
-        .attr("height", function(d) { return height - y3(d["Adult Mortality"]); });
+        .attr("height", function(d) { return height - y3(d["Adult Mortality"]); })
+        .attr("fill","orange");
         
   container4.selectAll(".bar")
         .data(data1)
@@ -375,7 +378,8 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
         .attr("x", function(d) { return x1(d.Country);  })
         .attr("width", x1.bandwidth())//x.bandwidth()
         .attr("y", function(d) { return y4(d[" HIV/AIDS"]); })
-        .attr("height", function(d) { return height - y4(d[" HIV/AIDS"]); });
+        .attr("height", function(d) { return height - y4(d[" HIV/AIDS"]); })
+        .attr("fill","green");
         
   container5.selectAll(".bar")
         .data(data1)
@@ -385,8 +389,228 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
         .attr("x", function(d) { return x1(d.Country);  })
         .attr("width", x1.bandwidth())//x.bandwidth()
         .attr("y", function(d) { return y5(d[" BMI "]); })
-        .attr("height", function(d) { return height - y5(d[" BMI "]); });
+        .attr("height", function(d) { return height - y5(d[" BMI "]); })
+        .attr("fill","red");
         
+
+//legends
+container1.selectAll("bar")
+.data(data1)
+.enter().append("rect")
+.attr("class","bar")
+.attr("width", 15)
+.attr("height", 15)
+.style("fill", 'steelblue')
+.attr("x", 520)
+.attr("y", 30);
+
+container1.selectAll("bar")
+.data(data1)
+.enter().append("rect")
+.attr("class","bar")
+.attr("width", 15)
+.attr("height", 15)
+.style("fill", 'brown')
+.attr("x", 520)
+.attr("y", 60);
+
+container1.selectAll("bar")
+.data(data1)
+.enter().append("rect")
+.attr("class","bar")
+.attr("width", 15)
+.attr("height", 15)
+.style("fill", 'orange')
+.attr("x", 520)
+.attr("y", 90);
+
+container1.selectAll("bar")
+.data(data1)
+.enter().append("rect")
+.attr("class","bar")
+.attr("width", 15)
+.attr("height", 15)
+.style("fill", 'green')
+.attr("x", 520)
+.attr("y", 120);
+
+container1.selectAll("bar")
+.data(data1)
+.enter().append("rect")
+.attr("class","bar")
+.attr("width", 15)
+.attr("height", 15)
+.style("fill", 'red')
+.attr("x", 520)
+.attr("y", 150);
+
+container1.append('g')
+.attr('class', 'legend')
+.selectAll('text')
+.data(data1)
+.enter()
+.append('text')
+.text("Life Expectency")
+.attr('fill', "black")
+.attr('font-family', 'Calibri')
+.attr("x", 540)
+.attr('y', 43)
+.style("font-size", "15px")
+.attr('font-family', 'Calibri')
+.style("font-weight", "bold")
+.style("text-decoration", "bold");
+
+container1.append('g')
+.attr('class', 'legend')
+.selectAll('text')
+.data(data1)
+.enter()
+.append('text')
+.text("Infant Deaths")
+.attr('fill', "black")
+.attr('font-family', 'Calibri')
+.attr("x", 540)
+.attr('y', 73)
+.style("font-size", "15px")
+.attr('font-family', 'Calibri')
+.style("font-weight", "bold")
+.style("text-decoration", "bold");
+
+container1.append('g')
+.attr('class', 'legend')
+.selectAll('text')
+.data(data1)
+.enter()
+.append('text')
+.text("Adult Mortality")
+.attr('fill', "black")
+.attr('font-family', 'Calibri')
+.attr("x", 540)
+.attr('y', 103)
+.style("font-size", "15px")
+.attr('font-family', 'Calibri')
+.style("font-weight", "bold")
+.style("text-decoration", "bold");
+
+container1.append('g')
+.attr('class', 'legend')
+.selectAll('text')
+.data(data1)
+.enter()
+.append('text')
+.text("HIV/AIDS")
+.attr('fill', "black")
+.attr('font-family', 'Calibri')
+.attr("x", 540)
+.attr('y', 133)
+.style("font-size", "15px")
+.attr('font-family', 'Calibri')
+.style("font-weight", "bold")
+.style("text-decoration", "bold");
+
+container1.append('g')
+.attr('class', 'legend')
+.selectAll('text')
+.data(data1)
+.enter()
+.append('text')
+.text("BMI")
+.attr('fill', "black")
+.attr('font-family', 'Calibri')
+.attr("x", 540)
+.attr('y', 163)
+.style("font-size", "15px")
+.attr('font-family', 'Calibri')
+.style("font-weight", "bold")
+.style("text-decoration", "bold");
+
+
+//displaying result value
+container1.append('g')
+.attr('class', 'legend')
+.selectAll('text')
+.data(data1)
+.enter()
+.append('text')
+.text(function(d) { return d["expectancy "]})
+.attr('fill', "black")
+.attr('font-family', 'Calibri')
+.attr("x", 37)
+.attr('y', 9)
+.style("font-size", "14px")
+.attr('font-family', 'Calibri')
+.style("font-weight", "bold")
+.attr("text-anchor", "middle")
+.style("text-decoration", "bold");
+
+container3.append('g')
+.attr('class', 'legend')
+.selectAll('text')
+.data(data1)
+.enter()
+.append('text')
+.text(function(d) { return d["Adult Mortality"]})
+.attr('fill', "black")
+.attr('font-family', 'Calibri')
+.attr("x", 37)
+.attr('y', 9)
+.style("font-size", "14px")
+.attr('font-family', 'Calibri')
+.style("font-weight", "bold")
+.attr("text-anchor", "middle")
+.style("text-decoration", "bold");
+
+container4.append('g')
+.attr('class', 'legend')
+.selectAll('text')
+.data(data1)
+.enter()
+.append('text')
+.text(function(d) { return d[" HIV/AIDS"] })
+.attr('fill', "black")
+.attr('font-family', 'Calibri')
+.attr("x", 37)
+.attr('y', 9)
+.style("font-size", "14px")
+.attr('font-family', 'Calibri')
+.style("font-weight", "bold")
+.attr("text-anchor", "middle")
+.style("text-decoration", "bold");
+
+container2.append('g')
+.attr('class', 'legend')
+.selectAll('text')
+.data(data1)
+.enter()
+.append('text')
+.text(function(d) { return d["infant deaths"]})
+.attr('fill', "black")
+.attr('font-family', 'Calibri')
+.attr("x", 37)
+.attr('y', 9)
+.style("font-size", "14px")
+.attr('font-family', 'Calibri')
+.style("font-weight", "bold")
+.attr("text-anchor", "middle")
+.style("text-decoration", "bold");
+
+container5.append('g')
+.attr('class', 'legend')
+.selectAll('text')
+.data(data1)
+.enter()
+.append('text')
+.text(function(d) { return d[" BMI "]})
+.attr('fill', "black")
+.attr('font-family', 'Calibri')
+.attr("x", 37)
+.attr('y', 9)
+.style("font-size", "14px")
+.attr('font-family', 'Calibri')
+.style("font-weight", "bold")
+.attr("text-anchor", "middle")
+.style("text-decoration", "bold");
+
   container1.attr('transform','translate('+ width/49 +',0)'); //To move the g container to the right.
         
   container2.attr('transform','translate('+ width/10 +',0)'); //To move the g container to the right.
