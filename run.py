@@ -127,6 +127,10 @@ def get_barchart_data():
         barChartData.append(eachBarChart)
     return jsonify(barChartData)
 
+@app.route('/spatialbar')
+def spatialbar():
+    return render_template('spatialbar.html',data=df.to_json(orient="index"))
+
 #     age_labels = ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79']
 #     survived["age_group"] = pd.cut(survived.Age, range(0, 81, 10), right=False, labels=age_labels)
 #     survived[['age_group', 'Pclass']]
