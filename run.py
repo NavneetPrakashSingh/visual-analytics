@@ -79,18 +79,31 @@ def index():
 
 @app.route('/get_scatter_plot_data')
 def get_scatter_plot_data():
-    '''
     scatterPlotData = []
     # print(df)
     for index,row in df.iterrows():
-        print(row)
+        # print(row)
         eachData = {}
         eachData['carbondioxide'] = row['cumulative_co2_emissions_tonnes']
         eachData['life'] = row["expectancy "]
         eachData['status'] = row['Status']
         scatterPlotData.append(eachData)
-    '''
-    return jsonify("")
+    return jsonify(scatterPlotData)
+
+@app.route('/get_histogram_data')
+def get_histogram_data():
+    histogramData = []
+    year = df['Year'] == 2007
+    carbondioxide = df['cumulative_co2_emissions_tonnes'] < 14000000000
+    for index, row in df[year & carbondioxide].iterrows():
+        eachData = {}
+        eachData['country'] = row['Country']
+        eachData['carbondioxide'] = row['cumulative_co2_emissions_tonnes']
+        eachData['life'] = row["expectancy "]
+        eachData['status'] = row['Status']
+        histogramData.append(eachData)       
+    
+    return jsonify(histogramData)
 
 # def calculate_percentage(val, total):
 #     """Calculates the percentage of a value over a total"""

@@ -1,9 +1,4 @@
-// queue()
-// 	// .defer(d3.json, piechartDataUrl)
-//     // .defer(d3.json, barchartDataUrl)
-//     .defer(d3.json, scatterPlotDataUrl)
-//     .await(ready);
-console.log(barchartDataUrl);
+
 queue()
     .defer(d3.json, scatterPlotDataUrl)
     .defer(d3.json, barchartDataUrl)
@@ -12,9 +7,9 @@ queue()
 
 function ready(error, dataset, datasetBarChart, decisionTreeData) {
 
-    console.log("inside ready");
-    console.log(dataset);
-    console.log(decisionTreeData);
+    // console.log("inside ready");
+    // console.log(dataset);
+    // console.log(decisionTreeData);
 
     //d3ScatterPlot(dataset, datasetBarChart);
     // d3PieChart(dataset, datasetBarChart);
@@ -22,18 +17,20 @@ function ready(error, dataset, datasetBarChart, decisionTreeData) {
     d3DecisionTree(decisionTreeData)
 }
 
-// $(document).ready(function(){   
-//     $.ajax({
-//         // url: '/load_data/'+globalPath,
-//         url: '/get_scatter_plot_data',
-//         type: 'GET',
-//         success: function(response) {
-//             if(response){
-//                 d3ScatterPlot(response);
-//             }
-//         },
-//         error: function(error) {
-//             console.log(error);
-//         }
-//     });
-// })
+queue()
+    .defer(d3.json, scatterPlotDataUrl)
+    .await(scatterPlotContent);
+
+function scatterPlotContent(error, dataset, datasetBarChart) {
+    d3ScatterPlot(dataset,datasetBarChart);
+    d3ScatterPlotWithBoundaries(dataset,datasetBarChart);
+}
+
+
+queue()
+    .defer(d3.json, histogramPlotDataUrl)
+    .await(histogramReady);
+
+function histogramReady(error,dataset,datasetBarChart){
+    d3HistogramData(dataset,datasetBarChart);
+}
