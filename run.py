@@ -4,6 +4,10 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.tree import DecisionTreeClassifier 
+from sklearn.model_selection import train_test_split 
+from sklearn import metrics
+from sklearn.metrics import confusion_matrix
 
 app = Flask(__name__)
 
@@ -61,6 +65,23 @@ def rules(clf, features, labels, node_index=0):
         node['children'] = [rules(clf, features, labels, right_index),
                             rules(clf, features, labels, left_index)]
     return node
+
+
+@app.route('/split')
+def split():
+    y= df['Status']
+    features = ['expectancy ','cumulative_co2_emissions_tonnes']
+    X = df[features]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+    clf = DecisionTreeClassifier()
+    clf = clf.fit(X_train,y_train)
+    y_pred = clf.predict(X_test)
+    accuracy = metrics.accuracy_score(y_test, y_pred)
+    matrix = confusion_matrix(y_test,y_pred)
+    print("True positive",matrix[0][0])
+    return jsonify({"tp":int(matrix[0][0]),"fp":int(matrix[0][1]),"fn":int(matrix[1][0]),"tn":int(matrix[1][1]), "accuracy":accuracy})
+
+
 @app.route('/get_dt_data')
 def get_dt_data():
     
@@ -76,6 +97,12 @@ def get_piechart_barchart():
 @app.route('/')
 def index():
     return render_template('base.html')   
+
+
+@app.route('/get_tree_data')
+def get_tree_data():
+
+    return ""
 
 @app.route('/get_scatter_plot_data')
 def get_scatter_plot_data():
