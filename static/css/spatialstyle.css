@@ -1,0 +1,87 @@
+/* 
+Filename: Spatialstyle.css
+Author: Gurjot Singh
+Version: 1.1
+Created on: 10-July-2019
+Description: Contains the css stylesheet for the Spatial Bar Dashboard 
+*/
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    width: 960px;
+    height: 500px;
+    position: relative;
+    background: floralwhite;
+  }
+  
+  .land {
+    fill: #222;
+  }
+  
+  .boundary {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 1px;
+  }
+  
+  #tooltip-container {
+    position: absolute;
+    background-color: #fff;
+    color: #000;
+    padding: 10px;
+    border: 1px solid;
+    display: none;
+  }
+  
+  .tooltip_key {
+    font-weight: bold;
+  }
+  
+  .tooltip_value {
+    margin-left: 20px;
+    float: right;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  /* Refered from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_two_columns_flex*/
+  .row {
+    display: flex;
+  }
+
+  .column {
+    flex: 50%;
+    padding: 10px;
+    height: 300px;
+   
+  }
+  
+  #bar-chart {
+    margin-top: 125px;
+    margin-left: 21px;
+  }
+  
+  #slider {
+    padding: 1px 0px 18px 397px;
+  }
+  
+  #heading {
+    color: darkred;
+  }
+  
+  #year {
+    position: absolute;
+  }
+  
+  #slider_text {
+    position: relative;
+    left: -10px;
+    top: 2px;
+  }
+  
+  .year_slider_child {
+    text-align: center;
+    margin-left: -130px;
+  }

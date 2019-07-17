@@ -1,64 +1,33 @@
 <!DOCTYPE html>
+
 <meta charset="utf-8">
-<style>
-   body {
-   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-   width: 960px;
-   height: 500px;
-   position: relative;
-   }
-   #canvas {
-   }
-   #canvas-svg {
-   }
-   .land {
-   fill: #222;
-   }
-   .boundary {
-   fill: none;
-   stroke: #fff;
-   stroke-width: 1px;
-   }
-   #tooltip-container {
-   position: absolute;
-   background-color: #fff;
-   color: #000;
-   padding: 10px;
-   border: 1px solid;
-   display: none;
-   }
-   .tooltip_key {
-   font-weight: bold;
-   }
-   .tooltip_value {
-   margin-left: 20px;
-   float: right;
-   }
-  
-   * {
-   box-sizing: border-box;
-   }
-   .row {
-   display: flex;
-   }
-   /* Create two equal columns that sits next to each other */
-   .column {
-   flex: 50%;
-   padding: 10px;
-   height: 300px; /* Should be removed. Only for demonstration */
-   }
-</style>
-<div>
-<div id="year_slider" align="center"> <span id="range">Select Year: 2000</span></div>
-<div class = "row">
-   <div id="tooltip-container"></div>
-   <div class="column" id="canvas-svg">
-   </div>
-   <div class="column">
-      <svg id="bar" width="1260" height="600"></svg>
-   </div>
-</div>
-<script src="http://d3js.org/d3.v4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.1.0/topojson.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="./static/js/spatialbar.js"></script>
+  <!--Loading the SpatialStyle.css file -->
+	<link rel="stylesheet" href="./static/css/spatialstyle.css" />
+	<div>
+        <!--Slider for the Years -->
+		<div class="slider" id="slider">
+			<h1 align="center" id="heading">LIFE EXPECTENCY ANALYSIS</h1>
+			<div id="year_slider" align="center" >
+				<div id="year_slider_child" class="year_slider_child">
+					<span id="slider_text">Select a Year: 
+						<span id="range" ></span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class = "row">
+         <div id="tooltip-container"></div>
+           <!-- Spatial SVG -->
+         <div class="column" id="canvas-svg"></div>
+           <!-- Bar Chart on Selecting a country -->
+			<div class="column" id = "bar-chart">
+				<svg id="bar" width="1260" height="600"></svg>
+			</div>
+      </div>
+        <!--Loading the D3JS V4 library -->
+      <script src="http://d3js.org/d3.v4.min.js"></script>
+        <!--Loading the Topojsonminjs library for d3 -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.1.0/topojson.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+         <!--Loading the Spatialbar javascript file -->
+		<script src="./static/js/spatialbar.js"></script>
