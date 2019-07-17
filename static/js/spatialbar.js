@@ -350,7 +350,7 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
       return d["Adult Mortality"];
      })]);
      y4.domain([0, d3.max(data1, function(d) {
-      return d["cumulative_co2_emissions_tonnes"]/100000;
+      return d["cumulative_co2_emissions_tonnes"];
      })]);
      y5.domain([0, d3.max(data1, function(d) {
       return d[" BMI "];
