@@ -350,7 +350,7 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
       return d["Adult Mortality"];
      })]);
      y4.domain([0, d3.max(data1, function(d) {
-      return d[" HIV/AIDS"];
+      return d["cumulative_co2_emissions_tonnes"]/100000;
      })]);
      y5.domain([0, d3.max(data1, function(d) {
       return d[" BMI "];
@@ -437,10 +437,10 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
       })
       .attr("width", x1.bandwidth()) 
       .attr("y", function(d) {
-       return y4(d[" HIV/AIDS"]);
+       return y4(d["cumulative_co2_emissions_tonnes"]);
       })
       .attr("height", function(d) {
-       return height - y4(d[" HIV/AIDS"]);
+       return height - y4(d["cumulative_co2_emissions_tonnes"]);
       })
       .attr("fill", "green");
  
@@ -566,7 +566,7 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
       .data(data1)
       .enter()
       .append('text')
-      .text("HIV/AIDS")
+      .text("Co2 Emission")
       .attr('fill', "black")
       .attr('font-family', 'Calibri')
       .attr("x", 540)
@@ -639,7 +639,7 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
       .enter()
       .append('text')
       .text(function(d) {
-       return d[" HIV/AIDS"]
+       return d["cumulative_co2_emissions_tonnes"]
       })
       .attr('fill', "black")
       .attr('font-family', 'Calibri')
