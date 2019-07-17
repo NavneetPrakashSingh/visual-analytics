@@ -30,11 +30,14 @@
             var histogramPlotDataUrl = "{{ url_for('get_histogram_data') }}"; 
             var piechartDataUrl = "{{ url_for('get_piechart_data') }}";
             var barchartDataUrl = "{{ url_for('get_barchart_data') }}";
+            var pieDataUrl = "{{ url_for('split') }}";
       </script>
       <script src="{{ url_for('static', filename='js/scatterPlot.js') }}"></script>
       <script src="{{ url_for('static', filename='js/decisionTree.js') }}"></script>
       <script src="{{ url_for('static', filename='js/histogram.js') }}"></script>
       <script src="{{ url_for('static', filename='js/pieChart.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/tree.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/pie.js') }}"></script>
       <!-- <script src="{{ url_for('static', filename='js/barChart.js') }}"></script>  -->
       <script src="{{ url_for('static', filename='js/updateChart.js') }}"></script>
       <script src="{{ url_for('static', filename='js/main.js') }}"></script>
