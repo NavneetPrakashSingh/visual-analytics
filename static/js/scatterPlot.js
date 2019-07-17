@@ -1,6 +1,4 @@
 function d3ScatterPlot(dataset,datasetBarChart){
-  console.log("inside scatter plot");
-  console.log(dataset);
 
   xAxisData = []
   yAxisData = []

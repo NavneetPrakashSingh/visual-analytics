@@ -34,3 +34,21 @@ queue()
 function histogramReady(error,dataset,datasetBarChart){
     d3HistogramData(dataset,datasetBarChart);
 }
+
+queue()
+    .defer(d3.json, histogramPlotDataUrl)
+    .await(treeReady);
+
+function treeReady(error,dataset,datasetBarChart){
+    d3Tree(dataset,datasetBarChart);
+}
+
+queue()
+    .defer(d3.json, pieDataUrl)
+    .await(pieReady);
+
+function pieReady(error,dataset,datasetBarChart){
+    pie(dataset,datasetBarChart);
+}
+
+
