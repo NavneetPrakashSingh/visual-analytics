@@ -437,6 +437,7 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
       })
       .attr("width", x1.bandwidth()) 
       .attr("y", function(d) {
+        
        return y4(d["cumulative_co2_emissions_tonnes"]);
       })
       .attr("height", function(d) {
@@ -543,6 +544,38 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
       .attr('font-family', 'Calibri')
       .style("font-weight", "bold")
       .style("text-decoration", "bold");
+
+      container1.append('g')
+      .attr('class', 'legend')
+      .selectAll('text')
+      .data(data1)
+      .enter()
+      .append('text')
+      .text("Status: ")
+      .attr('fill', "black")
+      .attr('font-family', 'Calibri')
+      .attr("x", 510)
+      .attr('y', 13)
+      .style("font-size", "17px")
+      .attr('font-family', 'Calibri')
+      .style("font-weight", "bold")
+      .style("text-decoration", "bold");
+
+      container1.append('g')
+      .attr('class', 'legend')
+      .selectAll('text')
+      .data(data1)
+      .enter()
+      .append('text')
+      .text(function(d) { return d['Status']; })
+      .attr('fill', "black")
+      .attr('font-family', 'Calibri')
+      .attr("x", 560)
+      .attr('y', 13)
+      .style("font-size", "17px")
+      .attr('font-family', 'Calibri')
+      .style("font-weight", "bold")
+      .style("text-decoration", "bold");
  
      container1.append('g')
       .attr('class', 'legend')
@@ -639,7 +672,7 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
       .enter()
       .append('text')
       .text(function(d) {
-       return d["cumulative_co2_emissions_tonnes"]
+       return d3.formatPrefix(".1", 1e6)(d["cumulative_co2_emissions_tonnes"])
       })
       .attr('fill', "black")
       .attr('font-family', 'Calibri')
@@ -722,7 +755,7 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
       .call(d3.axisBottom(x1));
  
      container4.append("g")
-      .call(d3.axisLeft(y4));
+      .call(d3.axisLeft(y4).tickFormat(d3.formatPrefix(".1", 1e6)));
  
      container5.append("g")
       .attr("transform", "translate(0," + height + ")")
