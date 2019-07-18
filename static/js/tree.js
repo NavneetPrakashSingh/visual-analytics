@@ -2,20 +2,165 @@ function d3Tree(dataset,treeData){
     // set the dimensions and margins of the diagram
     var treeData =
   {
-    "name": "Top Level",
+    "name": "Cumulative C02 emission",
     "children": [
       { 
-		"name": "Level 2: A",
+		"name": "Cervical Cancer",
         "children": [
-          { "name": "Son of A" },
-          { "name": "Daughter of A" }
+          { 
+              "name": "Liver Cancer",
+              "children": [
+                { "name": "Infant Deaths" ,
+                "children": [
+                    { "name": "Alcohol" ,
+                    "children": [
+                        { "name": "DV" },
+                        { "name": "DP" }
+                      ] },
+                    { "name": "Alcohol",
+                    "children": [
+                        { "name": "DV" },
+                        { "name": "DP" }
+                      ] 
+                     }
+                  ] 
+                },
+                { "name": "Infant Deaths",
+                "children": [
+                    { "name": "Alcohol" ,
+                    "children": [
+                        { "name": "DV" },
+                        { "name": "DP" }
+                      ] 
+                    },
+                    { "name": "Alcohol" ,
+                    "children": [
+                        { "name": "DV" },
+                        { "name": "DP" }
+                      ] 
+                    }
+                  ] 
+                 }
+              ] 
+          },
+          { "name": "Liver Cancer",
+          "children": [
+            { "name": "Infant Deaths" ,
+            "children": [
+                { "name": "Alcohol" ,
+                "children": [
+                    { "name": "DV" },
+                    { "name": "DP" }
+                  ] 
+                },
+                { "name": "Alcohol" ,
+                "children": [
+                    { "name": "DV" },
+                    { "name": "DP" }
+                  ] 
+                }
+              ] 
+            },
+            { "name": "Infant Deaths" ,
+            "children": [
+                { "name": "Alcohol",
+                "children": [
+                    { "name": "DV" },
+                    { "name": "DP" }
+                  ] 
+                 },
+                { "name": "Alcohol" ,
+                "children": [
+                    { "name": "DV" },
+                    { "name": "DP" }
+                  ] 
+                }
+              ] 
+            }
+          ] 
+         }
         ]
       },
-      { "name": "Level 2: B" }
+      { 
+		"name": "Cervical Cancer",
+        "children": [
+          { "name": "Liver Cancer" ,
+          "children": [
+            { "name": "Infant Deaths" ,
+            "children": [
+                { "name": "Alcohol" ,
+                "children": [
+                    { "name": "DV" },
+                    { "name": "DP" }
+                  ] 
+                },
+                { "name": "Alcohol" ,
+                "children": [
+                    { "name": "DV" },
+                    { "name": "DP" }
+                  ] 
+                }
+              ] },
+            { "name": "Infant Deaths" ,
+            "children": [
+                { "name": "Alcohol" ,
+                "children": [
+                    { "name": "DV" },
+                    { "name": "DP" }
+                  ] 
+                },
+                { "name": "Alcohol" ,
+                "children": [
+                    { "name": "DV" },
+                    { "name": "DP" }
+                  ] 
+                }
+              ] 
+            }
+          ] 
+        },
+          { "name": "Liver Cancer" ,
+          "children": [
+            { "name": "Infant Deaths",
+            "children": [
+                { "name": "Alcohol" ,
+                "children": [
+                    { "name": "DV" },
+                    { "name": "DP" }
+                  ] 
+                },
+                { "name": "Alcohol" ,
+                "children": [
+                    { "name": "DV" },
+                    { "name": "DP" }
+                  ] 
+                }
+              ] 
+             },
+            { "name": "Infant Deaths" ,
+            "children": [
+                { "name": "Alcohol" ,
+                "children": [
+                    { "name": "DV" },
+                    { "name": "DP" }
+                  ] 
+                },
+                { "name": "Alcohol" ,
+                "children": [
+                    { "name": "DV" },
+                    { "name": "DP" }
+                  ] 
+                }
+              ] 
+            }
+          ] 
+        }
+        ]
+      }
     ]
   };
     var margin = {top: 40, right: 90, bottom: 50, left: 90},
-    width = 660 - margin.left - margin.right,
+    width = 1100 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
     // declares a tree layout and assigns the size

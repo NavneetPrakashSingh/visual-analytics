@@ -46,7 +46,12 @@ var svg = d3.select("#histogram").append("svg")
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
+        .call(xAxis)
+        .selectAll("text")  
+        .style("text-anchor", "end")
+        .attr("dx", "-1em")
+        .attr("dy", "-0.5em")
+        .attr("transform", "rotate(-90)");
   
     svg.append("g")
         .attr("class", "y axis")

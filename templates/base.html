@@ -35,7 +35,9 @@
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#upload-modal">
                           Upload DataSet
                         </button>
+                        <div class="dataset-success">DataSet uploaded successfully</div>
                   </div>
+                  <div class="loader"><img src="/static/css/45.gif" alt=""><div>Plotting Graphs, Please Wait...</div></div>
                     
                     <div class="first-visualization"></div>
                 </div>
@@ -67,6 +69,27 @@
                 </div>
               </div>
             </div>
+          </div>
+
+          <!-- feature modal -->
+          <div class="modal fade" id="select-feature" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Please select the file to continue</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body-feature">
+                          <h1>Inside modal body</h1>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary save-changes-feature">Save changes</button>
+                      </div>
+                  </div>
+              </div>
           </div>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>

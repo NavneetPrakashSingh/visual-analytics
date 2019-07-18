@@ -39,3 +39,18 @@
     stroke: steelblue;
     stroke-width: 3px;
 }
+
+.dataset-success{
+    color: green;
+    display: none;
+}
+
+.loader{
+    text-align: center;
+    margin-top: 5%;
+    display: none;
+}
+
+#form1{
+    padding: 2%;
+}
