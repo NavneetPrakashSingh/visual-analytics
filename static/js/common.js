@@ -20,7 +20,7 @@ $(document).ready(function(){
             var itemCount = 0;
             for (var items in data[0]){
                 console.log(items);
-                if(itemCount<20){
+                if(itemCount<15){
                     finalValueToBeAppended += "<div><input type=\"radio\" id=\""+items+"\" name=\"dataSet\" value=\""+items+"\"><label for=\""+items+"\">"+items+"</label></div>";
                 }else{
                     continue;
