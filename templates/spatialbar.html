@@ -23,7 +23,22 @@
 			<div class="column" id = "bar-chart">
 				<svg id="bar" width="1260" height="600"></svg>
 			</div>
-      </div>
+		
+	  </div>
+	 <br/>
+	 <br/>
+	 <br/>
+
+	 <div class="options" align = "center">
+	 <h4> Select Countries to Compare</h4>
+	 <select class="select-match" id="countries1"></select> 
+	 <select class="select-match" id="countries2"></select>
+	 <input name="compare" 
+           type="button" 
+           value="Compare Countries" 
+		   onclick="compare()" />
+	</div> 
+	<div class="comparison" id="comparison" > <svg id="bar_comparison" width="1260" height="600"></svg></div>
         <!--Loading the D3JS V4 library -->
       <script src="http://d3js.org/d3.v4.min.js"></script>
         <!--Loading the Topojsonminjs library for d3 -->

@@ -13,7 +13,10 @@ body {
     position: relative;
     background: floralwhite;
   }
-  
+  #comparison{
+    margin-left: 162px;
+    margin-top: 34px;
+  }
   .land {
     fill: #222;
   }
