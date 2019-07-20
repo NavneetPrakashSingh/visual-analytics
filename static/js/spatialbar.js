@@ -21,6 +21,7 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
    "width": 760,
    "height": 600
   }
+
  
   /* Creating the set for years and countries */
   var set_years = [];
@@ -35,8 +36,23 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
  
   });
   var years = new Set(set_years)
+
+  
   var country_set = new Set(set_country);
- 
+  var country_obj = [...country_set];
+     /* Creating Options for all the countries*/
+    var countries1 = d3.select("#countries1").selectAll("option")
+     .data(country_obj)
+     .enter()
+     .append("option")
+     .text(function(d) {return d;})
+
+     var countries2 = d3.select("#countries2").selectAll("option")
+     .data(country_obj)
+     .enter()
+     .append("option")
+     .text(function(d) {return d;})
+
   /* Creating the min max for the slider */
   var min_year = d3.min(data, function(d) {
    return d.Year;
@@ -778,6 +794,493 @@ d3.csv("static/data/Final_Dataset.csv", function(err, data) {
    }
   }
  
+
+ 
+
+ 
  
  
  });
+
+ function compare()
+ {
+  d3.csv("static/data/Final_Dataset.csv", function(err, data) {
+  //  var country1_selected = "India";
+    //var country2_selected = "Pakistan";
+    
+    var country1_selected = document.getElementById("countries1").value
+    var country2_selected = document.getElementById("countries2").value
+    //if (country_set.has(country1_selected) == true) {
+      var svg_bar1 = d3.select("#bar_comparison"),
+       margin = {
+        top: 200,
+        bottom: 200,
+        left: 20,
+        right: 80
+       },
+       width = +svg_bar1.attr("width") - margin.left - margin.right,
+       height = +svg_bar1.attr("height") - margin.top - margin.bottom;
+      d3.select("#svg_bar1").remove();
+      var bar = svg_bar1.selectAll(".bar")
+       .data(data)
+  
+  
+      var x1 = d3.scaleBand()
+       .range([0, width / 16])
+       .padding(0.6);
+  
+  
+      var y1 = d3.scaleLinear()
+       .range([height, 10]);
+  
+      var y2 = d3.scaleLinear()
+       .range([height, 10]);
+  
+      var y3 = d3.scaleLinear()
+       .range([height, 10]);
+  
+      var y4 = d3.scaleLinear()
+       .range([height, 10]);
+  
+      var y5 = d3.scaleLinear()
+       .range([height, 10]);
+       
+      var slider_year = document.getElementById("year").value;
+      var data1 = data.filter(function(d) {
+        
+       if (((d.Country == country1_selected) || (d.Country == country2_selected)) && d.Year == slider_year) {
+        return d;
+       }
+      })
+  
+  
+      x1.domain(data1.map(function(d) {
+       return d.Country;
+      }));
+  
+      
+      y1.domain([0, d3.max(data1, function(d) {
+       
+       return d["expectancy "];
+      })]);
+      y2.domain([0, d3.max(data1, function(d) {
+       return d["infant deaths"];
+      })]);
+      y3.domain([0, d3.max(data1, function(d) {
+       return d["Adult Mortality"];
+      })]);
+      y4.domain([0, d3.max(data1, function(d) {
+       return d["cumulative_co2_emissions_tonnes"];
+      })]);
+      y5.domain([0, d3.max(data1, function(d) {
+       return d[" BMI "];
+      })]);
+      
+      d3.select("#container_comparison1").remove();
+      d3.select("#container_comparison2").remove();
+      d3.select("#container_comparison3").remove();
+      d3.select("#container_comparison4").remove();
+      d3.select("#container_comparison5").remove();
+      /* Creating containers for multiple bar charts. Referred from https://stackoverflow.com/questions/33628552/two-bar-charts-from-same-data-object-using-d3-js */
+      var container_comparison1 = svg_bar1.append('g')
+       .attr('id', 'container_comparison1');
+  
+  
+  
+      var container_comparison2 = svg_bar1.append('g')
+       .attr('id', 'container_comparison2');
+  
+      var container_comparison3 = svg_bar1.append('g')
+       .attr('id', 'container_comparison3');
+  
+      var container_comparison4 = svg_bar1.append('g')
+       .attr('id', 'container_comparison4');
+  
+      var container_comparison5 = svg_bar1.append('g')
+       .attr('id', 'container_comparison5');
+  
+      container_comparison1.selectAll(".bar")
+       .data(data1)
+       .enter().append("rect")
+       .attr("class", "bar")
+       .merge(bar)
+       .attr("x", function(d) {
+        return x1(d.Country);
+       })
+       .attr("width", x1.bandwidth())
+       .attr("y", function(d) {
+        
+        return y1(d["expectancy "]);
+       })
+       .attr("height", function(d) {
+        return height - y1(d["expectancy "]);
+       })
+       .attr("fill", "steelblue")
+       .on("mouseover", function() { d3.select(this).style("fill", "#00008b"); tooltip.style("display", null); })
+       .on("mouseout", function() { d3.select(this).style("fill", "steelblue"); tooltip.style("display", "none"); })
+       .on("mousemove", function(d) {
+         
+         var xPosition = d3.mouse(this)[0]+40;
+         var yPosition = d3.mouse(this)[1];
+         tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+         tooltip.select("text").text(d["expectancy "]);
+       });
+  
+  
+      container_comparison2.selectAll(".bar")
+       .data(data1)
+       .enter().append("rect")
+       .attr("class", "bar")
+       .merge(bar)
+       .attr("x", function(d) {
+        return x1(d.Country);
+       })
+       .attr("width", x1.bandwidth()) 
+       .attr("y", function(d) {
+        return y2(d["infant deaths"]);
+       })
+       .attr("height", function(d) {
+        return height - y2(d["infant deaths"]);
+       })
+       .attr("fill", "brown")
+       .on("mouseover", function() { d3.select(this).style("fill", "maroon"); tooltip.style("display", null); })
+       .on("mouseout", function() { d3.select(this).style("fill", "brown"); tooltip.style("display", "none"); })
+       .on("mousemove", function(d) {
+         
+         var xPosition = d3.mouse(this)[0]+130;
+         var yPosition = d3.mouse(this)[1];
+         tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+         tooltip.select("text").text(d["infant deaths"]);
+       });
+  
+      container_comparison3.selectAll(".bar")
+       .data(data1)
+       .enter().append("rect")
+       .attr("class", "bar")
+       .attr("x", function(d) {
+        return x1(d.Country);
+       })
+       .attr("width", x1.bandwidth()) 
+       .attr("y", function(d) {
+        return y3(d["Adult Mortality"]);
+       })
+       .attr("height", function(d) {
+        return height - y3(d["Adult Mortality"]);
+       })
+       .attr("fill", "orange")
+       .on("mouseover", function() { d3.select(this).style("fill", "#FF4500"); tooltip.style("display", null); })
+       .on("mouseout", function() { d3.select(this).style("fill", "orange"); tooltip.style("display", "none"); })
+       .on("mousemove", function(d) {
+         
+         var xPosition = d3.mouse(this)[0]+250;
+         var yPosition = d3.mouse(this)[1];
+         tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+         tooltip.select("text").text(d["Adult Mortality"]);
+       });
+  
+      container_comparison4.selectAll(".bar")
+       .data(data1)
+       .enter().append("rect")
+       .attr("class", "bar")
+       .merge(bar)
+       .attr("x", function(d) {
+        return x1(d.Country);
+       })
+       .attr("width", x1.bandwidth()) 
+       .attr("y", function(d) {
+         
+        return y4(d["cumulative_co2_emissions_tonnes"]);
+       })
+       .attr("height", function(d) {
+        return height - y4(d["cumulative_co2_emissions_tonnes"]);
+       })
+       .attr("fill", "green")
+       .on("mouseover", function() { d3.select(this).style("fill", "darkgreen"); tooltip.style("display", null); })
+       .on("mouseout", function() { d3.select(this).style("fill", "green"); tooltip.style("display", "none"); })
+       .on("mousemove", function(d) {
+         
+         var xPosition = d3.mouse(this)[0]+380;
+         var yPosition = d3.mouse(this)[1];
+         tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+         tooltip.select("text").text(d["cumulative_co2_emissions_tonnes"]);
+       });
+  
+      container_comparison5.selectAll(".bar")
+       .data(data1)
+       .enter().append("rect")
+       .attr("class", "bar")
+       .merge(bar)
+       .attr("x", function(d) {
+        return x1(d.Country);
+       })
+       .attr("width", x1.bandwidth()) 
+       .attr("y", function(d) {
+        return y5(d[" BMI "]);
+       })
+       .attr("height", function(d) {
+        return height - y5(d[" BMI "]);
+       })
+       .attr("fill", "red")
+       .on("mouseover", function() { d3.select(this).style("fill", "brown"); tooltip.style("display", null); })
+       .on("mouseout", function() { d3.select(this).style("fill", "red"); tooltip.style("display", "none"); })
+       .on("mousemove", function(d) {
+         
+         var xPosition = d3.mouse(this)[0]+470;
+         var yPosition = d3.mouse(this)[1];
+         tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+         tooltip.select("text").text(d[" BMI "]);
+       });
+  
+  
+     /* Creating Legends for Bar Chart */
+      container_comparison1.selectAll("bar")
+       .data(data1)
+       .enter().append("rect")
+       .attr("class", "bar")
+       .attr("width", 15)
+       .attr("height", 15)
+       .style("fill", 'steelblue')
+       .attr("x", 520)
+       .attr("y", 30);
+
+      container_comparison1.selectAll("bar")
+       .data(data1)
+       .enter().append("rect")
+       .attr("class", "bar")
+       .attr("width", 15)
+       .attr("height", 15)
+       .style("fill", 'brown')
+       .attr("x", 520)
+       .attr("y", 60);
+  
+      container_comparison1.selectAll("bar")
+       .data(data1)
+       .enter().append("rect")
+       .attr("class", "bar")
+       .attr("width", 15)
+       .attr("height", 15)
+       .style("fill", 'orange')
+       .attr("x", 520)
+       .attr("y", 90);
+  
+      container_comparison1.selectAll("bar")
+       .data(data1)
+       .enter().append("rect")
+       .attr("class", "bar")
+       .attr("width", 15)
+       .attr("height", 15)
+       .style("fill", 'green')
+       .attr("x", 520)
+       .attr("y", 120);
+  
+      container_comparison1.selectAll("bar")
+       .data(data1)
+       .enter().append("rect")
+       .attr("class", "bar")
+       .attr("width", 15)
+       .attr("height", 15)
+       .style("fill", 'red')
+       .attr("x", 520)
+       .attr("y", 150);
+  
+      container_comparison1.append('g')
+       .attr('class', 'legend')
+       .selectAll('text')
+       .data(data1)
+       .enter()
+       .append('text')
+       .text("Life Expectency")
+       .attr('fill', "black")
+       .attr('font-family', 'Calibri')
+       .attr("x", 540)
+       .attr('y', 43)
+       .style("font-size", "15px")
+       .attr('font-family', 'Calibri')
+       .style("font-weight", "bold")
+       .style("text-decoration", "bold");
+  
+      container_comparison1.append('g')
+       .attr('class', 'legend')
+       .selectAll('text')
+       .data(data1)
+       .enter()
+       .append('text')
+       .text("Infant Deaths")
+       .attr('fill', "black")
+       .attr('font-family', 'Calibri')
+       .attr("x", 540)
+       .attr('y', 73)
+       .style("font-size", "15px")
+       .attr('font-family', 'Calibri')
+       .style("font-weight", "bold")
+       .style("text-decoration", "bold");
+  
+       container_comparison1.append('g')
+       .attr('class', 'legend')
+       .selectAll('text')
+       .data(data1)
+       .enter()
+       .append('text')
+       .text("Status: ")
+       .attr('fill', "black")
+       .attr('font-family', 'Calibri')
+       .attr("x", 510)
+       .attr('y', 13)
+       .style("font-size", "17px")
+       .attr('font-family', 'Calibri')
+       .style("font-weight", "bold")
+       .style("text-decoration", "bold");
+  
+       container_comparison1.append('g')
+       .attr('class', 'legend')
+       .selectAll('text')
+       .data(data1)
+       .enter()
+       .append('text')
+       .text(function(d) { return d['Status']; })
+       .attr('fill', "black")
+       .attr('font-family', 'Calibri')
+       .attr("x", 560)
+       .attr('y', 13)
+       .style("font-size", "17px")
+       .attr('font-family', 'Calibri')
+       .style("font-weight", "bold")
+       .style("text-decoration", "bold");
+  
+      container_comparison1.append('g')
+       .attr('class', 'legend')
+       .selectAll('text')
+       .data(data1)
+       .enter()
+       .append('text')
+       .text("Adult Mortality")
+       .attr('fill', "black")
+       .attr('font-family', 'Calibri')
+       .attr("x", 540)
+       .attr('y', 103)
+       .style("font-size", "15px")
+       .attr('font-family', 'Calibri')
+       .style("font-weight", "bold")
+       .style("text-decoration", "bold");
+  
+      container_comparison1.append('g')
+       .attr('class', 'legend')
+       .selectAll('text')
+       .data(data1)
+       .enter()
+       .append('text')
+       .text("Co2 Emission")
+       .attr('fill', "black")
+       .attr('font-family', 'Calibri')
+       .attr("x", 540)
+       .attr('y', 133)
+       .style("font-size", "15px")
+       .attr('font-family', 'Calibri')
+       .style("font-weight", "bold")
+       .style("text-decoration", "bold");
+  
+      container_comparison1.append('g')
+       .attr('class', 'legend')
+       .selectAll('text')
+       .data(data1)
+       .enter()
+       .append('text')
+       .text("BMI")
+       .attr('fill', "black")
+       .attr('font-family', 'Calibri')
+       .attr("x", 540)
+       .attr('y', 163)
+       .style("font-size", "15px")
+       .attr('font-family', 'Calibri')
+       .style("font-weight", "bold")
+       .style("text-decoration", "bold");
+  
+  
+    
+     /* Positioning the containers */
+      container_comparison1.attr('transform', 'translate(' + width / 49 + ',0)'); 
+      container_comparison2.attr('transform', 'translate(' + width / 10 + ',0)'); 
+      container_comparison3.attr('transform', 'translate(' + width / 5 + ',0)'); 
+      container_comparison4.attr('transform', 'translate(' + width / 3.2 + ',0)'); 
+      container_comparison5.attr('transform', 'translate(' + width / 2.5 + ',0)'); 
+     
+       /* Referred from https://bl.ocks.org/d3noob/3c040800ff6457717cca586ae9547dbf */
+      container_comparison2.append("g")
+       .attr("transform", "translate(0," + height + ")")
+       .call(d3.axisBottom(x1))
+       .selectAll('text')
+       .style("text-anchor", "end")
+       .attr("dx", "-.8em")
+       .attr("dy", ".15em")
+       .attr("transform", "rotate(-65)");
+  
+      container_comparison2.append("g")
+       .call(d3.axisLeft(y2));
+  
+      container_comparison1.append("g")
+       .attr("transform", "translate(0," + height + ")")
+       .call(d3.axisBottom(x1))
+       .selectAll('text')
+       .style("text-anchor", "end")
+       .attr("dx", "-.8em")
+       .attr("dy", ".15em")
+       .attr("transform", "rotate(-65)");
+  
+      container_comparison1.append("g")
+       .call(d3.axisLeft(y1));
+  
+      container_comparison3.append("g")
+       .attr("transform", "translate(0," + height + ")")
+       .call(d3.axisBottom(x1))
+       .selectAll('text')
+       .style("text-anchor", "end")
+       .attr("dx", "-.8em")
+       .attr("dy", ".15em")
+       .attr("transform", "rotate(-65)");
+  
+      container_comparison3.append("g")
+       .call(d3.axisLeft(y3));
+  
+      container_comparison4.append("g")
+       .attr("transform", "translate(0," + height + ")")
+       .call(d3.axisBottom(x1))
+       .selectAll('text')
+       .style("text-anchor", "end")
+       .attr("dx", "-.8em")
+       .attr("dy", ".15em")
+       .attr("transform", "rotate(-65)");
+  
+      container_comparison4.append("g")
+       .call(d3.axisLeft(y4).tickFormat(d3.formatPrefix(".1", 1e6)));
+  
+      container_comparison5.append("g")
+       .attr("transform", "translate(0," + height + ")")
+       .call(d3.axisBottom(x1))
+       .selectAll('text')
+       .style("text-anchor", "end")
+       .attr("dx", "-.8em")
+       .attr("dy", ".15em")
+       .attr("transform", "rotate(-65)");
+  
+      container_comparison5.append("g")
+       .call(d3.axisLeft(y5));
+     
+       /* Refered from https://bl.ocks.org/mjfoster83/7c9bdfd714ab2f2e39dd5c09057a55a0*/
+       var tooltip = svg_bar1.append("g")
+       .attr("class", "tooltip")
+       .style("display", "none");
+         
+     tooltip.append("rect")
+       .attr("width", 60)
+       .attr("height", 20)
+       .attr("fill", "white")
+       .style("opacity", 0.5);
+   
+     tooltip.append("text")
+       .attr("x", 30)
+       .attr("dy", "1.2em")
+       .style("text-anchor", "middle")
+       .attr("font-size", "12px")
+       .attr("font-weight", "bold");
+  });
+ }
